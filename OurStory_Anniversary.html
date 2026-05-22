@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You & Me — 2 Years ♡</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:#0a0408;
+  font-family:'Cormorant Garamond',serif;
+  color:#f0e6d0;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ── CUSTOM CURSOR ─────────────────── */
+.cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:#d4a843;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(212,168,67,.5);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .15s ease}
+
+/* ── FALLING PETALS ────────────────── */
+.petal{position:fixed;top:-30px;pointer-events:none;z-index:5;font-size:14px;opacity:.75;animation:petalFall linear infinite}
+@keyframes petalFall{
+  0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:.8}
+  25%{transform:translateY(25vh) rotate(90deg) translateX(20px)}
+  50%{transform:translateY(50vh) rotate(180deg) translateX(-15px)}
+  75%{transform:translateY(75vh) rotate(270deg) translateX(25px)}
+  100%{transform:translateY(105vh) rotate(360deg) translateX(0);opacity:0}
+}
+
+/* ── INTRO SCREEN ──────────────────── */
+#intro{
+  position:fixed;inset:0;z-index:9999;
+  background:#0a0408;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 1.2s ease, visibility 1.2s ease;
+}
+#intro.hide{opacity:0;visibility:hidden}
+.intro-heart{font-size:80px;animation:introPulse 1.2s ease-in-out infinite;margin-bottom:30px}
+.intro-text{font-family:'Great Vibes',cursive;font-size:52px;color:#d4a843;text-align:center;line-height:1.3;opacity:0;animation:introFadeUp 1s .4s forwards}
+.intro-sub{font-size:13px;letter-spacing:6px;color:rgba(212,168,67,.6);text-transform:uppercase;margin-top:16px;opacity:0;animation:introFadeUp 1s .9s forwards}
+.intro-btn{
+  margin-top:50px;padding:14px 40px;
+  border:1px solid #d4a843;background:transparent;
+  color:#d4a843;font-family:'Cormorant Garamond',serif;
+  font-size:14px;letter-spacing:4px;text-transform:uppercase;
+  cursor:pointer;border-radius:30px;
+  transition:all .4s;opacity:0;animation:introFadeUp 1s 1.4s forwards;
+  position:relative;overflow:hidden;
+}
+.intro-btn::before{content:'';position:absolute;inset:0;background:#d4a843;transform:translateX(-100%);transition:transform .4s;z-index:-1}
+.intro-btn:hover{color:#0a0408}
+.intro-btn:hover::before{transform:translateX(0)}
+@keyframes introPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes introFadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MAIN WRAPPER ──────────────────── */
+#main{opacity:0;transition:opacity 1.2s ease}
+#main.show{opacity:1}
+
+/* ── HERO BANNER ───────────────────── */
+#hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 60%,#2a0a14 0%,#150508 45%,#0a0408 100%);
+}
+.hero-particles{position:absolute;inset:0;pointer-events:none}
+.hero-content{position:relative;z-index:10;text-align:center;padding:0 20px}
+.pre-title{font-size:12px;letter-spacing:10px;color:rgba(212,168,67,.7);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp 1s .3s forwards}
+.main-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(64px,12vw,130px);
+  color:#fff;
+  line-height:1;
+  text-shadow:0 0 60px rgba(212,168,67,.35),0 0 120px rgba(200,86,106,.2);
+  opacity:0;animation:fadeUp 1.2s .6s forwards;
+}
+.main-title em{color:#d4a843;font-style:normal}
+.year-badge{
+  display:inline-flex;align-items:center;gap:16px;
+  margin:24px 0;padding:10px 28px;
+  border:1px solid rgba(212,168,67,.3);
+  border-radius:30px;
+  background:rgba(212,168,67,.06);
+  backdrop-filter:blur(10px);
+  font-size:14px;letter-spacing:5px;color:rgba(240,230,208,.7);
+  opacity:0;animation:fadeUp 1s .9s forwards;
+}
+.year-dot{width:5px;height:5px;border-radius:50%;background:#d4a843}
+.hero-quote{
+  font-size:clamp(16px,2.5vw,22px);font-style:italic;
+  color:rgba(240,230,208,.65);max-width:520px;margin:0 auto;
+  line-height:1.9;
+  opacity:0;animation:fadeUp 1s 1.2s forwards;
+}
+.scroll-cue{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;animation:fadeIn 1s 2s forwards;
+}
+.scroll-cue span{font-size:10px;letter-spacing:4px;color:rgba(212,168,67,.5);text-transform:uppercase}
+.scroll-line{width:1px;height:44px;background:linear-gradient(#d4a843,transparent);animation:scrollBounce 2s ease-in-out infinite}
+@keyframes scrollBounce{0%,100%{transform:scaleY(1);opacity:.5}50%{transform:scaleY(1.2);opacity:1}}
+
+/* ── VIDEO SECTION ─────────────────── */
+#video-section{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:#080306;overflow:hidden;
+  padding:80px 20px;
+}
+.vs-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#1e0810 0%,#080306 65%)}
+
+/* Ambient light blobs */
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;opacity:.25}
+.blob1{width:500px;height:500px;background:#c8566a;top:-100px;left:-150px;animation:blobDrift 8s ease-in-out infinite}
+.blob2{width:400px;height:400px;background:#d4a843;bottom:-100px;right:-100px;animation:blobDrift 10s ease-in-out infinite reverse}
+.blob3{width:300px;height:300px;background:#8b1a2a;top:40%;left:40%;animation:blobDrift 12s ease-in-out infinite 2s}
+@keyframes blobDrift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+
+.vs-inner{position:relative;z-index:10;width:100%;max-width:960px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+@media(max-width:768px){.vs-inner{grid-template-columns:1fr;gap:40px}}
+
+/* Left side — text */
+.vs-text{text-align:left}
+@media(max-width:768px){.vs-text{text-align:center}}
+.vs-tag{font-size:11px;letter-spacing:8px;color:#c8566a;text-transform:uppercase;margin-bottom:16px;display:block}
+.vs-heading{font-family:'Playfair Display',serif;font-size:clamp(38px,5vw,58px);line-height:1.15;margin-bottom:24px;color:#fff}
+.vs-heading em{color:#d4a843;font-style:italic}
+.vs-divider{width:60px;height:1px;background:linear-gradient(#d4a843,transparent);margin:0 0 24px;}
+@media(max-width:768px){.vs-divider{margin:0 auto 24px}}
+.vs-body{font-size:17px;line-height:2;color:rgba(240,230,208,.72);font-style:italic;margin-bottom:32px}
+.vs-stats{display:flex;gap:30px;flex-wrap:wrap}
+@media(max-width:768px){.vs-stats{justify-content:center}}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:38px;color:#d4a843;display:block;line-height:1}
+.stat-label{font-size:11px;letter-spacing:3px;color:rgba(240,230,208,.5);text-transform:uppercase;margin-top:4px;display:block}
+
+/* Right side — video */
+.vs-video-wrap{position:relative}
+/* Outer glow ring */
+.video-glow-ring{
+  position:absolute;inset:-20px;
+  border-radius:36px;
+  background:conic-gradient(from 0deg,#d4a843,#c8566a,#f4a0b0,#d4a843,#c8566a,#d4a843);
+  animation:ringRotate 6s linear infinite;
+  opacity:.6;
+  filter:blur(12px);
+}
+@keyframes ringRotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* Solid golden frame */
+.video-frame-border{
+  position:absolute;inset:-3px;
+  border-radius:28px;
+  background:linear-gradient(135deg,#d4a843 0%,#c8566a 50%,#d4a843 100%);
+  background-size:200% 200%;
+  animation:frameShimmer 3s ease infinite;
+}
+@keyframes frameShimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+.video-inner{position:relative;border-radius:24px;overflow:hidden;background:#000;box-shadow:0 40px 100px rgba(0,0,0,.8)}
+.video-inner video{width:100%;display:block;border-radius:24px;max-height:75vh;object-fit:contain}
+
+/* Corner ornaments */
+.corner{position:absolute;width:28px;height:28px;z-index:20;pointer-events:none}
+.corner.tl{top:-6px;left:-6px;border-top:2px solid #d4a843;border-left:2px solid #d4a843;border-radius:4px 0 0 0}
+.corner.tr{top:-6px;right:-6px;border-top:2px solid #d4a843;border-right:2px solid #d4a843;border-radius:0 4px 0 0}
+.corner.bl{bottom:-6px;left:-6px;border-bottom:2px solid #d4a843;border-left:2px solid #d4a843;border-radius:0 0 0 4px}
+.corner.br{bottom:-6px;right:-6px;border-bottom:2px solid #d4a843;border-right:2px solid #d4a843;border-radius:0 0 4px 0}
+
+/* Floating elements around video */
+.v-float{position:absolute;pointer-events:none;z-index:25;animation:vFloat 3.5s ease-in-out infinite}
+@keyframes vFloat{0%,100%{transform:translateY(0) rotate(0deg);opacity:.9}50%{transform:translateY(-16px) rotate(8deg);opacity:1}}
+
+/* ── LYRICS / MOMENTS SECTION ──────── */
+#lyrics-section{
+  position:relative;min-height:100vh;
+  background:#060204;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding:100px 20px;
+}
+.ls-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,#180608 0%,#060204 60%)}
+.ls-inner{position:relative;z-index:10;max-width:800px;width:100%;text-align:center}
+.ls-tag{font-size:11px;letter-spacing:8px;color:rgba(212,168,67,.6);text-transform:uppercase;margin-bottom:50px;display:block}
+
+.lyric-card{
+  margin:0 auto 32px;max-width:680px;
+  padding:36px 40px;
+  border:1px solid rgba(212,168,67,.12);
+  border-radius:16px;
+  background:rgba(212,168,67,.03);
+  backdrop-filter:blur(4px);
+  position:relative;
+  overflow:hidden;
+  opacity:0;transform:translateY(30px);
+  transition:opacity .8s,transform .8s;
+}
+.lyric-card.visible{opacity:1;transform:translateY(0)}
+.lyric-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,168,67,.4),transparent);
+}
+.lyric-card::after{
+  content:'"';
+  position:absolute;top:16px;right:24px;
+  font-family:'Great Vibes',cursive;
+  font-size:80px;color:rgba(212,168,67,.08);line-height:1;
+}
+.lyric-text{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,3vw,28px);
+  font-style:italic;line-height:1.6;
+  color:#fff;margin-bottom:12px;
+}
+.lyric-sub{font-size:13px;letter-spacing:3px;color:rgba(212,168,67,.5);text-transform:uppercase}
+
+/* ── MESSAGE SECTION ───────────────── */
+#message-section{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:#080306;overflow:hidden;padding:100px 20px;
+}
+.ms-inner{position:relative;z-index:10;max-width:700px;text-align:center}
+.ms-heart-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:40px;font-size:24px}
+.ms-heart{animation:msPulse 1.8s ease-in-out infinite}
+.ms-heart:nth-child(2){animation-delay:.3s;font-size:32px}
+.ms-heart:nth-child(3){animation-delay:.6s}
+@keyframes msPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.ms-heading{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(48px,9vw,90px);
+  color:#d4a843;
+  text-shadow:0 0 50px rgba(212,168,67,.4);
+  margin-bottom:30px;line-height:1.1;
+}
+.ms-body{
+  font-size:clamp(17px,2.5vw,22px);
+  font-style:italic;line-height:2;
+  color:rgba(240,230,208,.8);
+  margin-bottom:40px;
+}
+.ms-body strong{color:#d4a843;font-style:normal;font-weight:400}
+.ms-rule{
+  width:1px;height:60px;
+  background:linear-gradient(transparent,#d4a843,transparent);
+  margin:0 auto 40px;
+}
+.ms-signature{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(32px,5vw,52px);
+  color:rgba(244,160,176,.9);
+  letter-spacing:2px;
+}
+.ms-year{font-size:12px;letter-spacing:6px;color:rgba(212,168,67,.4);text-transform:uppercase;margin-top:16px}
+
+/* Rose row */
+.rose-row{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:50px;flex-wrap:wrap}
+.rose-item{font-size:clamp(22px,3vw,30px);animation:roseFloat 3s ease-in-out infinite}
+.rose-item:nth-child(1){animation-delay:0s}
+.rose-item:nth-child(2){animation-delay:.3s}
+.rose-item:nth-child(3){animation-delay:.6s}
+.rose-item:nth-child(4){animation-delay:.9s}
+.rose-item:nth-child(5){animation-delay:1.2s}
+.rose-item:nth-child(6){animation-delay:1.5s}
+.rose-item:nth-child(7){animation-delay:1.8s}
+@keyframes roseFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ── SHARED KEYFRAMES ──────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ── MUSIC TOGGLE ──────────────────── */
+#music-btn{
+  position:fixed;bottom:28px;right:28px;z-index:9990;
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(212,168,67,.12);
+  border:1px solid rgba(212,168,67,.4);
+  color:#d4a843;font-size:20px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(12px);transition:all .3s;
+}
+#music-btn:hover{background:rgba(212,168,67,.25);transform:scale(1.1)}
+#music-btn.on{background:rgba(212,168,67,.22);box-shadow:0 0 20px rgba(212,168,67,.3)}
+
+/* Nav dots */
+#nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:990;display:flex;flex-direction:column;gap:14px}
+.nd{width:7px;height:7px;border-radius:50%;border:1px solid rgba(212,168,67,.5);cursor:pointer;transition:all .3s;opacity:.4}
+.nd.on{background:#d4a843;opacity:1;box-shadow:0 0 8px rgba(212,168,67,.5)}
+
+@media(max-width:768px){
+  #video-section-2 .reveal[style*="grid"]{grid-template-columns:1fr!important}
+  #video-section-2 [style*="order:1"]{order:1!important}
+  #video-section-2 [style*="order:2"]{order:2!important;text-align:center!important}
+}
+
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Petals container -->
+<div id="petals"></div>
+
+<!-- Music -->
+<button id="music-btn" title="Play music">♫</button>
+
+<!-- Nav -->
+<div id="nav">
+  <div class="nd on" data-sec="hero"></div>
+  <div class="nd" data-sec="video-section"></div>
+  <div class="nd" data-sec="video-section-2"></div>
+  <div class="nd" data-sec="lyrics-section"></div>
+  <div class="nd" data-sec="message-section"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     INTRO SPLASH SCREEN
+════════════════════════════════════ -->
+<div id="intro">
+  <div class="intro-heart">💖</div>
+  <div class="intro-text">Two Years of Us</div>
+  <div class="intro-sub">A love story worth celebrating</div>
+  <button class="intro-btn" onclick="enterSite()">Enter Our World ♡</button>
+</div>
+
+<!-- ════════════════════════════════════
+     MAIN SITE
+════════════════════════════════════ -->
+<div id="main">
+
+<!-- ── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Particle stars -->
+  <canvas id="heroCanvas" class="hero-particles" style="pointer-events:none"></canvas>
+
+  <!-- Ambient roses -->
+  <span style="position:absolute;top:12%;left:6%;font-size:26px;animation:roseFloat 4s ease-in-out infinite;pointer-events:none;opacity:.6">🌹</span>
+  <span style="position:absolute;top:18%;right:8%;font-size:22px;animation:roseFloat 4s ease-in-out infinite .6s;pointer-events:none;opacity:.6">🌸</span>
+  <span style="position:absolute;bottom:20%;left:5%;font-size:20px;animation:roseFloat 4s ease-in-out infinite 1.2s;pointer-events:none;opacity:.5">🌹</span>
+  <span style="position:absolute;bottom:25%;right:6%;font-size:24px;animation:roseFloat 4s ease-in-out infinite 1.8s;pointer-events:none;opacity:.6">🌷</span>
+  <span style="position:absolute;top:50%;left:2%;font-size:14px;animation:roseFloat 3s ease-in-out infinite;pointer-events:none;opacity:.4;color:#d4a843">✦</span>
+  <span style="position:absolute;top:40%;right:3%;font-size:14px;animation:roseFloat 3s ease-in-out infinite .5s;pointer-events:none;opacity:.4;color:#d4a843">✦</span>
+
+  <div class="hero-content">
+    <div class="pre-title">A 2-Year Anniversary Tribute</div>
+    <div class="main-title">You & <em>Me</em></div>
+    <div class="year-badge">
+      <div class="year-dot"></div>
+      <span>2023</span>
+      <div class="year-dot"></div>
+      <span>Two Years Strong</span>
+      <div class="year-dot"></div>
+      <span>2025</span>
+      <div class="year-dot"></div>
+    </div>
+    <div class="hero-quote">
+      From the very first smile to every stolen moment —<br>
+      this is our love, captured in time.
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Our Story</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- ── VIDEO SECTION ─── -->
+<section id="video-section">
+  <div class="vs-bg"></div>
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <div class="vs-inner">
+
+    <!-- Left: text -->
+    <div class="vs-text">
+      <span class="vs-tag reveal">Our Moments</span>
+      <h2 class="vs-heading reveal">Every frame<br>tells a <em>love story</em></h2>
+      <div class="vs-divider reveal"></div>
+      <p class="vs-body reveal">
+        Two years of laughter, closeness, and joy.<br>
+        Every glance, every smile, every car ride —<br>
+        this is us at our most beautiful.
+      </p>
+      <div class="vs-stats reveal">
+        <div class="stat">
+          <span class="stat-num">2</span>
+          <span class="stat-label">Years Together</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Memories Made</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">1</span>
+          <span class="stat-label">Person For Me</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: video -->
+    <div class="vs-video-wrap reveal">
+      <div class="video-glow-ring"></div>
+      <div class="video-frame-border"></div>
+
+      <div class="video-inner" style="position:relative;z-index:10">
+        <video
+          id="loveVideo"
+          controls
+          playsinline
+          preload="metadata"
+          style="width:100%;display:block;border-radius:22px;max-height:72vh;background:#000"
+        >
+          <source src="your-video-url.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Corner ornaments -->
+      <div class="corner tl" style="z-index:15;position:absolute"></div>
+      <div class="corner tr" style="z-index:15;position:absolute"></div>
+      <div class="corner bl" style="z-index:15;position:absolute"></div>
+      <div class="corner br" style="z-index:15;position:absolute"></div>
+
+      <!-- Floating things -->
+      <span class="v-float" style="top:-18px;left:20%;animation-delay:0s;font-size:20px">🌹</span>
+      <span class="v-float" style="top:-18px;right:20%;animation-delay:.8s;font-size:18px">🌸</span>
+      <span class="v-float" style="top:20%;right:-32px;animation-delay:1.6s;font-size:18px;color:#d4a843">♡</span>
+      <span class="v-float" style="top:50%;right:-35px;animation-delay:.4s;font-size:22px">💕</span>
+      <span class="v-float" style="top:70%;right:-32px;animation-delay:2s;font-size:16px;color:#d4a843">✦</span>
+      <span class="v-float" style="top:20%;left:-32px;animation-delay:1.2s;font-size:18px">💕</span>
+      <span class="v-float" style="top:50%;left:-35px;animation-delay:.6s;font-size:16px;color:#d4a843">♡</span>
+      <span class="v-float" style="bottom:-18px;left:20%;animation-delay:2.4s;font-size:18px">🌷</span>
+      <span class="v-float" style="bottom:-18px;right:20%;animation-delay:1s;font-size:20px">🌹</span>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ════════════════════════════════════
+     SECOND VIDEO SECTION
+════════════════════════════════════ -->
+<section id="video-section-2" style="
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:#06030a;overflow:hidden;padding:80px 20px;
+">
+  <!-- ambient blobs -->
+  <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:#8b1a6b;top:-80px;right:-100px;filter:blur(90px);opacity:.18;pointer-events:none"></div>
+  <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:#d4a843;bottom:-80px;left:-80px;filter:blur(90px);opacity:.15;pointer-events:none"></div>
+  <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:#c8566a;top:45%;left:45%;filter:blur(80px);opacity:.12;pointer-events:none"></div>
+
+  <!-- top floating roses -->
+  <span style="position:absolute;top:6%;left:8%;font-size:24px;animation:roseFloat 4s ease-in-out infinite;pointer-events:none;opacity:.55">🌹</span>
+  <span style="position:absolute;top:10%;right:9%;font-size:20px;animation:roseFloat 4s ease-in-out infinite .7s;pointer-events:none;opacity:.55">🌸</span>
+  <span style="position:absolute;bottom:8%;left:7%;font-size:22px;animation:roseFloat 4s ease-in-out infinite 1.4s;pointer-events:none;opacity:.5">🌷</span>
+  <span style="position:absolute;bottom:12%;right:8%;font-size:24px;animation:roseFloat 4s ease-in-out infinite 2.1s;pointer-events:none;opacity:.55">🌹</span>
+  <span style="position:absolute;top:45%;left:2%;font-size:13px;color:#d4a843;animation:roseFloat 3s ease-in-out infinite .3s;pointer-events:none;opacity:.5">✦</span>
+  <span style="position:absolute;top:55%;right:2%;font-size:13px;color:#d4a843;animation:roseFloat 3s ease-in-out infinite 1s;pointer-events:none;opacity:.5">✦</span>
+
+  <div style="position:relative;z-index:10;width:100%;max-width:960px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+
+    <!-- LEFT: second video -->
+    <div class="reveal" style="position:relative;order:1">
+      <!-- spinning glow ring -->
+      <div style="position:absolute;inset:-20px;border-radius:36px;background:conic-gradient(from 0deg,#8b1a6b,#d4a843,#c8566a,#f4a0b0,#8b1a6b);animation:ringRotate 6s linear infinite;opacity:.55;filter:blur(14px)"></div>
+      <!-- gold shimmer border -->
+      <div style="position:absolute;inset:-3px;border-radius:28px;background:linear-gradient(135deg,#8b1a6b,#d4a843,#c8566a,#8b1a6b);background-size:200% 200%;animation:frameShimmer 3s ease infinite;"></div>
+      <!-- video container -->
+      <div style="position:relative;z-index:10;border-radius:24px;overflow:hidden;background:#000;box-shadow:0 40px 100px rgba(0,0,0,.8)">
+        <video
+          id="loveVideo2"
+          controls
+          playsinline
+          preload="metadata"
+          style="width:100%;display:block;border-radius:22px;max-height:72vh;background:#000"
+        >
+          <source src="your-video-url-2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <!-- corner ornaments -->
+      <div style="position:absolute;top:-6px;left:-6px;width:28px;height:28px;border-top:2px solid #d4a843;border-left:2px solid #d4a843;border-radius:4px 0 0 0;z-index:15"></div>
+      <div style="position:absolute;top:-6px;right:-6px;width:28px;height:28px;border-top:2px solid #d4a843;border-right:2px solid #d4a843;border-radius:0 4px 0 0;z-index:15"></div>
+      <div style="position:absolute;bottom:-6px;left:-6px;width:28px;height:28px;border-bottom:2px solid #d4a843;border-left:2px solid #d4a843;border-radius:0 0 0 4px;z-index:15"></div>
+      <div style="position:absolute;bottom:-6px;right:-6px;width:28px;height:28px;border-bottom:2px solid #d4a843;border-right:2px solid #d4a843;border-radius:0 0 4px 0;z-index:15"></div>
+      <!-- floating elements -->
+      <span style="position:absolute;top:-18px;left:22%;font-size:20px;animation:vFloat 3.5s ease-in-out infinite;pointer-events:none;z-index:25">🌸</span>
+      <span style="position:absolute;top:-18px;right:22%;font-size:18px;animation:vFloat 3.5s ease-in-out infinite .9s;pointer-events:none;z-index:25">🌹</span>
+      <span style="position:absolute;top:25%;right:-34px;font-size:20px;animation:vFloat 3.5s ease-in-out infinite 1.7s;pointer-events:none;z-index:25">💕</span>
+      <span style="position:absolute;top:55%;right:-34px;font-size:16px;color:#d4a843;animation:vFloat 3.5s ease-in-out infinite .5s;pointer-events:none;z-index:25">♡</span>
+      <span style="position:absolute;top:25%;left:-34px;font-size:16px;color:#d4a843;animation:vFloat 3.5s ease-in-out infinite 1.3s;pointer-events:none;z-index:25">♡</span>
+      <span style="position:absolute;top:55%;left:-34px;font-size:20px;animation:vFloat 3.5s ease-in-out infinite 2.1s;pointer-events:none;z-index:25">💕</span>
+      <span style="position:absolute;bottom:-18px;left:22%;font-size:18px;animation:vFloat 3.5s ease-in-out infinite 2.5s;pointer-events:none;z-index:25">🌷</span>
+      <span style="position:absolute;bottom:-18px;right:22%;font-size:20px;animation:vFloat 3.5s ease-in-out infinite .3s;pointer-events:none;z-index:25">🌹</span>
+    </div>
+
+    <!-- RIGHT: text -->
+    <div style="text-align:left;order:2">
+      <span class="reveal" style="display:block;font-size:11px;letter-spacing:8px;color:#c8566a;text-transform:uppercase;margin-bottom:16px">More of Our Story</span>
+      <h2 class="reveal" style="font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,54px);line-height:1.18;margin-bottom:22px;color:#fff">
+        Every ordinary<br>moment with you<br>is <em style="color:#d4a843;font-style:italic">extraordinary</em>
+      </h2>
+      <div class="reveal" style="width:60px;height:1px;background:linear-gradient(#d4a843,transparent);margin:0 0 22px"></div>
+      <p class="reveal" style="font-size:17px;line-height:2;color:rgba(240,230,208,.72);font-style:italic;margin-bottom:32px">
+        Car rides, quiet rooms, spontaneous smiles —<br>
+        these are the moments I treasure most.<br>
+        The ones no one else sees.<br>
+        The ones that are just <em>ours</em>.
+      </p>
+      <!-- quote card -->
+      <div class="reveal" style="
+        padding:22px 28px;
+        border-left:2px solid #d4a843;
+        background:rgba(212,168,67,.05);
+        border-radius:0 12px 12px 0;
+        position:relative;
+      ">
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#fff;line-height:1.6;margin-bottom:10px">
+          "Through every season of life, <em>you</em> are my constant."
+        </div>
+        <div style="font-size:11px;letter-spacing:3px;color:rgba(212,168,67,.5);text-transform:uppercase">Our Promise</div>
+        <span style="position:absolute;top:10px;right:16px;font-family:'Georgia',serif;font-size:60px;color:rgba(212,168,67,.07);line-height:1">"</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── LYRICS / MOMENTS ─── -->
+<section id="lyrics-section">
+  <div class="ls-bg"></div>
+
+  <!-- Background candles -->
+  <div style="position:absolute;left:5%;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;opacity:.35;pointer-events:none">
+    <div style="width:14px;height:22px;background:radial-gradient(ellipse at 50% 80%,#fff8e0,#ffd700 40%,#ff8c00 80%,transparent);border-radius:50% 50% 35% 35%;animation:cFlicker 1.5s ease-in-out infinite alternate;filter:blur(.5px)"></div>
+    <div style="width:12px;height:90px;background:linear-gradient(90deg,#e8d5b0,#f5e8c0);border-radius:3px;margin-top:-1px"></div>
+    <div style="width:20px;height:6px;background:#d4a843;border-radius:3px"></div>
+  </div>
+  <div style="position:absolute;right:5%;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;opacity:.35;pointer-events:none">
+    <div style="width:14px;height:22px;background:radial-gradient(ellipse at 50% 80%,#fff8e0,#ffd700 40%,#ff8c00 80%,transparent);border-radius:50% 50% 35% 35%;animation:cFlicker 1.8s ease-in-out infinite alternate-reverse;filter:blur(.5px)"></div>
+    <div style="width:12px;height:110px;background:linear-gradient(90deg,#e8d5b0,#f5e8c0);border-radius:3px;margin-top:-1px"></div>
+    <div style="width:20px;height:6px;background:#d4a843;border-radius:3px"></div>
+  </div>
+
+  <div class="ls-inner">
+    <span class="ls-tag">Moments That Define Us</span>
+
+    <div class="lyric-card">
+      <div class="lyric-text">"You've got that smile<br>that only heaven can make"</div>
+      <div class="lyric-sub">The moment I knew</div>
+    </div>
+
+    <div class="lyric-card">
+      <div class="lyric-text">"I pray to God every day<br>that you stay by my side"</div>
+      <div class="lyric-sub">My daily prayer</div>
+    </div>
+
+    <div class="lyric-card">
+      <div class="lyric-text">"Yeah, you are my dream<br>come to life"</div>
+      <div class="lyric-sub">Everything I wished for</div>
+    </div>
+
+    <div class="lyric-card">
+      <div class="lyric-text">"Baby, everything that I have<br>is yours"</div>
+      <div class="lyric-sub">All of me, always</div>
+    </div>
+
+    <div class="lyric-card">
+      <div class="lyric-text">"I'll be standing right next<br>to you — one day"</div>
+      <div class="lyric-sub">Our forever promise</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── FINAL MESSAGE ─── -->
+<section id="message-section">
+  <canvas id="msgCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.6"></canvas>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,#1e0810 0%,#080306 70%);pointer-events:none"></div>
+
+  <div class="ms-inner" style="position:relative;z-index:10">
+    <div class="ms-heart-row">
+      <span class="ms-heart">🌹</span>
+      <span class="ms-heart">💖</span>
+      <span class="ms-heart">🌹</span>
+    </div>
+
+    <h2 class="ms-heading reveal">Happy 2nd Anniversary</h2>
+
+    <div class="ms-rule"></div>
+
+    <p class="ms-body reveal">
+      Two years ago, something <strong>extraordinary</strong> began.<br>
+      Two years of your smile lighting up my world.<br>
+      Two years of knowing I have <strong>you</strong>.<br><br>
+      You are not just the person I love —<br>
+      you are the reason every day <strong>feels like a gift</strong>.
+    </p>
+
+    <div class="ms-rule"></div>
+
+    <div class="ms-signature reveal">Forever Yours ♡</div>
+    <div class="ms-year reveal">2023 — 2025 — Always</div>
+
+    <div class="rose-row reveal">
+      <span class="rose-item">🌹</span>
+      <span class="rose-item">🌸</span>
+      <span class="rose-item">🌹</span>
+      <span class="rose-item">💕</span>
+      <span class="rose-item">🌹</span>
+      <span class="rose-item">🌸</span>
+      <span class="rose-item">🌹</span>
+    </div>
+  </div>
+</section>
+
+</div><!-- end #main -->
+
+<script>
+// ── Intro
+function enterSite(){
+  document.getElementById('intro').classList.add('hide');
+  document.getElementById('main').classList.add('show');
+  initStars();
+}
+
+// ── Custom cursor
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+setInterval(()=>{rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';},16);
+
+// ── Falling petals
+const petalArr=['🌸','🌹','🌷','✿'];
+function spawnPetal(){
+  const p=document.createElement('span');
+  p.className='petal';
+  p.textContent=petalArr[Math.floor(Math.random()*petalArr.length)];
+  p.style.cssText=`left:${Math.random()*100}vw;font-size:${10+Math.random()*10}px;animation-duration:${7+Math.random()*8}s;animation-delay:${-Math.random()*8}s`;
+  document.getElementById('petals').appendChild(p);
+  setTimeout(()=>p.remove(),16000);
+}
+for(let i=0;i<18;i++) spawnPetal();
+setInterval(spawnPetal,700);
+
+// ── Star canvas helper
+function initStarCanvas(id, density=180){
+  const cv=document.getElementById(id);
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  let st=[];
+  function resize(){cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;st=[];for(let i=0;i<density;i++)st.push({x:Math.random()*cv.width,y:Math.random()*cv.height,r:.5+Math.random()*1.5,o:Math.random(),d:(.003+Math.random()*.007)*(Math.random()>.5?1:-1)});}
+  function draw(){ctx.clearRect(0,0,cv.width,cv.height);st.forEach(s=>{s.o+=s.d;if(s.o>1||s.o<.05)s.d*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fillStyle=`rgba(255,245,210,${s.o})`;ctx.fill();});requestAnimationFrame(draw);}
+  resize();draw();window.addEventListener('resize',resize);
+}
+function initStars(){initStarCanvas('heroCanvas',220);initStarCanvas('msgCanvas',160);}
+
+// ── Scroll reveal
+const rObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.12});
+document.querySelectorAll('.reveal,.lyric-card').forEach(el=>rObs.observe(el));
+
+// ── Nav dots
+const ndDots=document.querySelectorAll('.nd');
+const ndSecs=['hero','video-section','video-section-2','lyrics-section','message-section'];
+window.addEventListener('scroll',()=>{
+  const mid=window.scrollY+window.innerHeight*.45;
+  ndSecs.forEach((id,i)=>{
+    const el=document.getElementById(id);if(!el)return;
+    if(mid>=el.offsetTop&&mid<el.offsetTop+el.offsetHeight){
+      ndDots.forEach(d=>d.classList.remove('on'));
+      if(ndDots[i])ndDots[i].classList.add('on');
+    }
+  });
+});
+ndDots.forEach((d,i)=>d.addEventListener('click',()=>document.getElementById(ndSecs[i])?.scrollIntoView({behavior:'smooth'})));
+
+// ── Music (Web Audio romantic melody)
+let musicOn=false,audioCtx=null;
+document.getElementById('music-btn').addEventListener('click',()=>{
+  musicOn=!musicOn;
+  const btn=document.getElementById('music-btn');
+  btn.classList.toggle('on',musicOn);
+  btn.textContent=musicOn?'♪':'♫';
+  if(musicOn)playMusic(); else if(audioCtx){audioCtx.close();audioCtx=null;}
+});
+function playMusic(){
+  if(audioCtx)audioCtx.close();
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  // Romantic arpeggios — C major pentatonic, soft sine
+  const scale=[261.63,293.66,329.63,392,440,523.25,587.33,659.25,392,523.25];
+  const pattern=[0,2,4,6,4,2,0,2,4,5,7,5,4,2,1,0,2,4,6,7,6,4,2,0];
+  let t=audioCtx.currentTime+.05;
+  function schedBatch(){
+    pattern.forEach((n,i)=>{
+      const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
+      const rev=audioCtx.createConvolver();
+      osc.connect(g);g.connect(audioCtx.destination);
+      osc.type='sine';osc.frequency.value=scale[n%scale.length];
+      const start=t+i*.45;
+      g.gain.setValueAtTime(0,start);
+      g.gain.linearRampToValueAtTime(.06,start+.06);
+      g.gain.exponentialRampToValueAtTime(.001,start+.42);
+      osc.start(start);osc.stop(start+.45);
+    });
+    t+=pattern.length*.45;
+    if(audioCtx&&musicOn)setTimeout(schedBatch,(pattern.length*.45-3)*1000);
+  }
+  schedBatch();
+}
+
+// ── Candle flicker CSS
+const cStyle=document.createElement('style');
+cStyle.textContent='@keyframes cFlicker{0%{transform:scaleX(1) scaleY(1) rotate(-2deg)}25%{transform:scaleX(.88) scaleY(1.08) rotate(2deg)}50%{transform:scaleX(1.06) scaleY(.93) rotate(0)}75%{transform:scaleX(.92) scaleY(1.12) rotate(-1deg)}100%{transform:scaleX(1) scaleY(1) rotate(1deg)}}';
+document.head.appendChild(cStyle);
+</script>
+</body>
+</html>
