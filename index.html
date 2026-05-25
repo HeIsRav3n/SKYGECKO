@@ -369,6 +369,11 @@ body{
 <!-- Petals container -->
 <div id="petals"></div>
 
+<!-- Hidden YouTube Player -->
+<div style="position:absolute; width:0; height:0; overflow:hidden; left:-9999px;">
+  <div id="ytplayer"></div>
+</div>
+
 <!-- Music -->
 <button id="music-btn" title="Play music">♫</button>
 
@@ -738,11 +743,25 @@ body{
 </div><!-- end #main -->
 
 <script>
+var ytPlayer = null;
+var ytPlayerReady = false;
+var ytPlayOnReady = false;
+var isMuted = false;
+
 // ── Intro
 function enterSite(){
   document.getElementById('intro').classList.add('hide');
   document.getElementById('main').classList.add('show');
   initStars();
+  
+  if(ytPlayerReady && ytPlayer){
+    ytPlayer.unMute();
+    ytPlayer.playVideo();
+    document.getElementById('music-btn').classList.add('on');
+    document.getElementById('music-btn').textContent='♪';
+  } else {
+    ytPlayOnReady = true;
+  }
 }
 
 // ── Custom cursor
@@ -795,39 +814,78 @@ window.addEventListener('scroll',()=>{
 });
 ndDots.forEach((d,i)=>d.addEventListener('click',()=>document.getElementById(ndSecs[i])?.scrollIntoView({behavior:'smooth'})));
 
-// ── Music (Web Audio romantic melody)
-let musicOn=false,audioCtx=null;
+// ── Music (YouTube Audio Embed)
+// Load YouTube API
+const ytScript = document.createElement('script');
+ytScript.src = "https://www.youtube.com/iframe_api";
+const firstScript = document.getElementsByTagName('script')[0];
+firstScript.parentNode.insertBefore(ytScript, firstScript);
+
+window.onYouTubeIframeAPIReady = function() {
+  ytPlayer = new YT.Player('ytplayer', {
+    height: '0',
+    width: '0',
+    videoId: 'IrcxCMWSkZU',
+    playerVars: {
+      'autoplay': 0,
+      'loop': 1,
+      'playlist': 'IrcxCMWSkZU',
+      'controls': 0,
+      'showinfo': 0,
+      'rel': 0,
+      'modestbranding': 1
+    },
+    events: {
+      'onReady': function(event) {
+        ytPlayerReady = true;
+        if(ytPlayOnReady){
+          ytPlayer.unMute();
+          ytPlayer.playVideo();
+          document.getElementById('music-btn').classList.add('on');
+          document.getElementById('music-btn').textContent='♪';
+        }
+      },
+      'onStateChange': function(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+          ytPlayer.playVideo();
+        }
+      }
+    }
+  });
+};
+
+// Toggle Mute
 document.getElementById('music-btn').addEventListener('click',()=>{
-  musicOn=!musicOn;
+  if(!ytPlayerReady || !ytPlayer) return;
   const btn=document.getElementById('music-btn');
-  btn.classList.toggle('on',musicOn);
-  btn.textContent=musicOn?'♪':'♫';
-  if(musicOn)playMusic(); else if(audioCtx){audioCtx.close();audioCtx=null;}
-});
-function playMusic(){
-  if(audioCtx)audioCtx.close();
-  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-  // Romantic arpeggios — C major pentatonic, soft sine
-  const scale=[261.63,293.66,329.63,392,440,523.25,587.33,659.25,392,523.25];
-  const pattern=[0,2,4,6,4,2,0,2,4,5,7,5,4,2,1,0,2,4,6,7,6,4,2,0];
-  let t=audioCtx.currentTime+.05;
-  function schedBatch(){
-    pattern.forEach((n,i)=>{
-      const osc=audioCtx.createOscillator(),g=audioCtx.createGain();
-      const rev=audioCtx.createConvolver();
-      osc.connect(g);g.connect(audioCtx.destination);
-      osc.type='sine';osc.frequency.value=scale[n%scale.length];
-      const start=t+i*.45;
-      g.gain.setValueAtTime(0,start);
-      g.gain.linearRampToValueAtTime(.06,start+.06);
-      g.gain.exponentialRampToValueAtTime(.001,start+.42);
-      osc.start(start);osc.stop(start+.45);
-    });
-    t+=pattern.length*.45;
-    if(audioCtx&&musicOn)setTimeout(schedBatch,(pattern.length*.45-3)*1000);
+  isMuted = !isMuted;
+  
+  if(isMuted){
+    ytPlayer.mute();
+    btn.classList.remove('on');
+    btn.textContent='♫';
+  } else {
+    ytPlayer.unMute();
+    if(ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING){
+      ytPlayer.playVideo();
+    }
+    btn.classList.add('on');
+    btn.textContent='♪';
   }
-  schedBatch();
-}
+});
+
+// Auto-mute background song when local videos are played
+document.querySelectorAll('video').forEach(v => {
+  v.addEventListener('play', () => {
+    if(ytPlayerReady && ytPlayer && !isMuted) {
+      ytPlayer.mute();
+      const btn=document.getElementById('music-btn');
+      btn.classList.remove('on');
+      btn.textContent='♫';
+      isMuted = true;
+    }
+  });
+});
 
 // ── Candle flicker CSS
 const cStyle=document.createElement('style');
