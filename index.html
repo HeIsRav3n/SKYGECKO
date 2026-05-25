@@ -222,6 +222,62 @@ body{
 }
 .lyric-sub{font-size:13px;letter-spacing:3px;color:rgba(212,168,67,.5);text-transform:uppercase}
 
+/* ── LETTER SECTION ────────────────── */
+#letter-section{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  background:#090205;overflow:hidden;padding:100px 20px;
+}
+.letter-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#15040a 0%,#090205 80%);opacity:0.8}
+.letter-inner{
+  position:relative;z-index:10;max-width:850px;
+  padding:70px 60px;
+  background:rgba(20,5,10,.5);
+  border:1px solid rgba(212,168,67,.2);
+  border-radius:30px;
+  backdrop-filter:blur(16px);
+  box-shadow:0 40px 100px rgba(0,0,0,.8), inset 0 0 40px rgba(212,168,67,.05);
+}
+.letter-inner::before{
+  content:'';position:absolute;inset:0;
+  border-radius:30px;
+  background:linear-gradient(135deg,rgba(212,168,67,.25) 0%,transparent 30%,transparent 70%,rgba(200,86,106,.25) 100%);
+  pointer-events:none;
+}
+.letter-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(44px,7vw,70px);
+  color:#d4a843;text-align:center;margin-bottom:40px;
+  text-shadow:0 0 50px rgba(212,168,67,.4);
+}
+.letter-p{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(18px,2.5vw,22px);
+  line-height:1.9;
+  color:rgba(240,230,208,.9);
+  margin-bottom:28px;
+  text-align:center;
+  font-style:italic;
+}
+.letter-p strong{color:#d4a843;font-weight:400;font-style:normal}
+.letter-sig-wrap{
+  margin-top:60px;text-align:center;
+  display:flex;flex-direction:column;gap:12px;
+}
+.letter-sig{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(34px,5vw,50px);
+  color:#c8566a;
+  text-shadow:0 0 30px rgba(200,86,106,.5);
+}
+.letter-sig-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,2vw,20px);
+  color:rgba(240,230,208,.7);
+  letter-spacing:1px;
+}
+@media(max-width:768px){.letter-inner{padding:50px 30px}}
+
 /* ── MESSAGE SECTION ───────────────── */
 #message-section{
   position:relative;min-height:100vh;
@@ -321,6 +377,7 @@ body{
   <div class="nd" data-sec="video-section"></div>
   <div class="nd" data-sec="video-section-2"></div>
   <div class="nd" data-sec="lyrics-section"></div>
+  <div class="nd" data-sec="letter-section"></div>
   <div class="nd" data-sec="message-section"></div>
 </div>
 
@@ -594,6 +651,48 @@ body{
 </section>
 
 
+<!-- ── THE LETTER ─── -->
+<section id="letter-section">
+  <div class="letter-bg"></div>
+  
+  <!-- Floating ambient particles -->
+  <span style="position:absolute;top:10%;left:10%;font-size:24px;animation:vFloat 4s ease-in-out infinite;opacity:.4;pointer-events:none">✨</span>
+  <span style="position:absolute;bottom:15%;right:12%;font-size:20px;animation:vFloat 5s ease-in-out infinite 1s;opacity:.3;pointer-events:none">🌹</span>
+  <span style="position:absolute;top:20%;right:8%;font-size:18px;animation:vFloat 3.5s ease-in-out infinite .5s;opacity:.5;pointer-events:none;color:#d4a843">♡</span>
+  
+  <div class="letter-inner">
+    <div class="letter-title reveal">My Promise to You</div>
+    
+    <div class="letter-p reveal" style="transition-delay:0.1s">
+      "Can't believe it's been 2 years already.<br>
+      It all still feels like yesterday.<br>
+      We've grown, learnt, improved, and most of all understood to love each other dearly."
+    </div>
+    
+    <div class="letter-p reveal" style="transition-delay:0.2s">
+      "Even when things feel shaky and the world feels like it's crumbling, we always remind each other that <strong>we've got each other</strong>."
+    </div>
+    
+    <div class="letter-p reveal" style="transition-delay:0.3s">
+      "I genuinely wouldn't have asked for a better partner to do life with. You've always made my life much better, much easier and much more productive."
+    </div>
+    
+    <div class="letter-p reveal" style="transition-delay:0.4s">
+      "I pray God helps us in this current phase and stage of life."
+    </div>
+    
+    <div class="letter-p reveal" style="transition-delay:0.5s">
+      "I just want to remind you that it only gets better and I promise to always continue loving you, improving myself, being a better person and growing with you."
+    </div>
+    
+    <div class="letter-sig-wrap reveal" style="transition-delay:0.7s">
+      <div class="letter-sig">I love you so much Baby M ❤️</div>
+      <div class="letter-sig-sub">Thank you for an amazing 2 years ❤️</div>
+      <div class="letter-sig-sub">I couldn't have asked for a better partner than you ❤️</div>
+    </div>
+  </div>
+</section>
+
 <!-- ── FINAL MESSAGE ─── -->
 <section id="message-section">
   <canvas id="msgCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.6"></canvas>
@@ -682,7 +781,7 @@ document.querySelectorAll('.reveal,.lyric-card').forEach(el=>rObs.observe(el));
 
 // ── Nav dots
 const ndDots=document.querySelectorAll('.nd');
-const ndSecs=['hero','video-section','video-section-2','lyrics-section','message-section'];
+const ndSecs=['hero','video-section','video-section-2','lyrics-section','letter-section','message-section'];
 window.addEventListener('scroll',()=>{
   const mid=window.scrollY+window.innerHeight*.45;
   ndSecs.forEach((id,i)=>{
