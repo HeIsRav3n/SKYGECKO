@@ -352,9 +352,10 @@ body{
 .nd.on{background:#d4a843;opacity:1;box-shadow:0 0 8px rgba(212,168,67,.5)}
 
 @media(max-width:768px){
-  #video-section-2 .reveal[style*="grid"]{grid-template-columns:1fr!important}
-  #video-section-2 [style*="order:1"]{order:1!important}
-  #video-section-2 [style*="order:2"]{order:2!important;text-align:center!important}
+  .vs2-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .vs2-text { text-align: center !important; order: 1 !important; }
+  .vs2-video { order: 2 !important; width: fit-content !important; max-width: 90vw !important; margin: 0 auto !important; }
+  #loveVideo2 { max-height: 70vh !important; }
 }
 
 </style>
@@ -533,10 +534,10 @@ body{
   <span style="position:absolute;top:45%;left:2%;font-size:13px;color:#d4a843;animation:roseFloat 3s ease-in-out infinite .3s;pointer-events:none;opacity:.5">✦</span>
   <span style="position:absolute;top:55%;right:2%;font-size:13px;color:#d4a843;animation:roseFloat 3s ease-in-out infinite 1s;pointer-events:none;opacity:.5">✦</span>
 
-  <div style="position:relative;z-index:10;width:100%;max-width:1150px;display:grid;grid-template-columns:1.3fr 0.7fr;gap:50px;align-items:center">
+  <div class="vs2-grid" style="position:relative;z-index:10;width:100%;max-width:1150px;display:grid;grid-template-columns:1.3fr 0.7fr;gap:50px;align-items:center">
 
     <!-- LEFT: second video -->
-    <div class="reveal" style="position:relative;order:1;width:fit-content;margin:0 auto;">
+    <div class="reveal vs2-video" style="position:relative;order:1;width:fit-content;margin:0 auto;">
       <!-- spinning glow ring -->
       <div style="position:absolute;inset:-20px;border-radius:36px;background:conic-gradient(from 0deg,#8b1a6b,#d4a843,#c8566a,#f4a0b0,#8b1a6b);animation:ringRotate 6s linear infinite;opacity:.55;filter:blur(14px)"></div>
       <!-- gold shimmer border -->
@@ -571,7 +572,7 @@ body{
     </div>
 
     <!-- RIGHT: text -->
-    <div style="text-align:left;order:2">
+    <div class="vs2-text" style="text-align:left;order:2">
       <span class="reveal" style="display:block;font-size:11px;letter-spacing:8px;color:#c8566a;text-transform:uppercase;margin-bottom:16px">More of Our Story</span>
       <h2 class="reveal" style="font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,54px);line-height:1.18;margin-bottom:22px;color:#fff">
         Every ordinary<br>moment with you<br>is <em style="color:#d4a843;font-style:italic">extraordinary</em>
